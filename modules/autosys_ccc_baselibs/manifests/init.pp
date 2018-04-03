@@ -36,10 +36,11 @@
 # Copyright 2018 Your name here, unless otherwise noted.
 #
 class autosys_ccc_baselibs {
-$autosys_ccc_prereqPackages = ['compat-libstdc++-33.i686','bzip2-libs.i686','ncurses-devel.i686','libstdc++.i686','nss-softokn-freebl.i686','cracklib.i686','libuuid.i686','audit-libs.i686','ed']
+$agent_install_base_packages = ['wget','gzip','unzip','tar']
 
-package {$autosys_ccc_prereqPackages:
-	ensure => present,
-	}
+package { '$agent_install_base_packages':
+	ensure => installed,
+}
+include autosys_ccc_baselibs::download_agent
 
 }

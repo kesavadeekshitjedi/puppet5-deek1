@@ -6,5 +6,5 @@ package {'$autosys_ccc_rereqPackages':
 	ensure => present
 	}
 
-}
 
+}

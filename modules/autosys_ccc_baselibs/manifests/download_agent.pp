@@ -21,14 +21,14 @@ class autosys_ccc_baselibs::download_agent_tar {
     mode => 0755,
   }
 ->
-  exec {'getagenttar:
+  exec {'getAgentMedia':
   command => "wget $fileserverbase_dwnld_loc",
   cwd => $download_directory,
 
   }
 
   exec {'deflateMedia':
-  require => Exec['getagenttar'],
+  require => Exec['getAgentMedia'],
   command => 'gzip -dc $agent_media_tar_name',
   cwd => $agent_unzip_directory,
   Notify => "Agent Media deflated and ready for user"

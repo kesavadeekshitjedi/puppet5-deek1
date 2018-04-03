@@ -12,6 +12,10 @@ user {'wcc':
 	Notify => 'User created'
         }
 }
+
+node 'rh7-sq1' {
+  include autosys_ccc_baselibs::download_agent
+}
 node default {
         include x11packages
         include autosys_ccc_baselibs
@@ -49,4 +53,3 @@ exec {'mount':
        require => Package['cifs-utils'],
        }
 }
-

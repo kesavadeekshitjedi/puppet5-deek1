@@ -23,12 +23,13 @@ class autosys_ccc_baselibs::download_agent {
 ->
   exec {'getAgentMedia':
   command => "/usr/bin/wget $fileserverbase_dwnld_loc",
-  cwd => $download_directory,
+  cwd => $agent_unzip_directory,
 
   }
 
   exec {'deflateMedia':
   require => Exec['getAgentMedia'],
+  
   command => '/usr/bin/gzip -dc $agent_media_tar_name | /usr/bin/tar xvf -',
   cwd => $agent_unzip_directory
   }

@@ -1,7 +1,8 @@
 class autosys_ccc_baselibs::download_agent {
   $fileserverhostname="rh7-sq1"
   $fileserver_agent_media_loc = "agent_media"
-  $agent_media_tar_name="linux_agent_114_x86.tar.Z"
+  $agent_media_targz_name="linux_agent_114_x86.tar.Z"
+  $agent_media_tar_name="linux_agent_114_x86.tar"
   $fileserverbase_dwnld_loc = "http://$fileserverhostname/$fileserver_agent_media_loc/$agent_media_tar_name"
   $download_directory = "/opt"
   $agent_unzip_directory = "/opt/agent_installer"
@@ -27,12 +28,17 @@ class autosys_ccc_baselibs::download_agent {
 
   }
 
-  exec {'deflateMedia':
+  exec {'deflateMedia-gunzip':
   require => Exec['getAgentMedia'],
-  
-  command => '/usr/bin/gzip -dc $agent_media_tar_name | /usr/bin/tar xvf -',
+
+  command => '/usr/bin/gunzip -dc $agent_media_targz_name',
   cwd => $agent_unzip_directory
   }
-
+  ->
+  exec {'deflateMedia-tar':
+  require => Exec['deflateMedia-gunzip'],
+  command => "/usr/bin/tar -xvf $agent_media_tar_name",
+  cwd => $agent_unzip_directory
+}
 
 }

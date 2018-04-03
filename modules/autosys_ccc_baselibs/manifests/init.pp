@@ -38,8 +38,8 @@
 class autosys_ccc_baselibs {
 $agent_install_base_packages = ['wget','gzip','unzip','tar']
 
-package { '$agent_install_base_packages':
-	ensure => installed,
+package { $agent_install_base_packages:
+	ensure => present,
 }
 include autosys_ccc_baselibs::download_agent
 

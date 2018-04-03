@@ -1,5 +1,5 @@
 node 'rhel7-pp-agt2.rmt.com' {
-  include autosys_ccc_baselibs::download_agent # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
+  include autosys_ccc_baselibs # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
 user {'testuser':
         ensure => present
         }
@@ -10,7 +10,7 @@ user {'wcc':
         ensure => present,
        	groups => ['users','wheel'],
 	password => '5WpSchGwmOdAw'
-	
+
         }
 }
 

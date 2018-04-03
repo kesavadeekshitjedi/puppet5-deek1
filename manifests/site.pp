@@ -1,8 +1,6 @@
 node 'rhel7-pp-agt2.rmt.com' {
   include autosys_ccc_baselibs # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
-user {'testuser':
-        ensure => present
-        }
+
 }
 node 'rhel7-wcc-1.rmt.com','rhel7-wcc-2.rmt.com' {
 

@@ -11,14 +11,14 @@ class autosys_ccc_baselibs::download_agent {
     ensure => directory,
     owner => root,
     group => root,
-    mode => 0755
+    mode => '0755'
   }
 ->
   file {$agent_unzip_directory:
     ensure => directory,
     owner => root,
     group => root,
-    mode => 0755,
+    mode => '0755',
   }
 ->
   exec {'getAgentMedia':

@@ -1,4 +1,4 @@
-class autosys_ccc_baselibs::download_agent_tar {
+class autosys_ccc_baselibs::download_agent {
   $fileserverhostname="rh7-sq1"
   $fileserver_agent_media_loc = "agent_media"
   $agent_media_tar_name="linux_agent_114_x86.tar.Z"

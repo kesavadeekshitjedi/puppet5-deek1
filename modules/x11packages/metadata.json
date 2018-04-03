@@ -1,0 +1,14 @@
+{
+  "name": "dk-x11packages",
+  "version": "1.0.0",
+  "author": "daddepalli",
+  "summary": "Installs the modules required for X11 functionality and vim",
+  "license": "Apache 2.0",
+  "source": "",
+  "project_page": null,
+  "issues_url": null,
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+

@@ -9,7 +9,7 @@ node 'rhel7-wcc-1.rmt.com','rhel7-wcc-2.rmt.com' {
 user {'wcc':
         ensure => present,
        	groups => ['users','wheel'],
-	password => '5WpSchGwmOdAw',
+	password => '5WpSchGwmOdAw'
 	
         }
 }

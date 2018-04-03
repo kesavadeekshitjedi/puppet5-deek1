@@ -10,7 +10,7 @@ user {'wcc':
         ensure => present,
        	groups => ['users','wheel'],
 	password => '5WpSchGwmOdAw',
-	Notify => 'User created'
+	
         }
 }
 

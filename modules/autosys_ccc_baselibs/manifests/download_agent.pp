@@ -30,8 +30,7 @@ class autosys_ccc_baselibs::download_agent_tar {
   exec {'deflateMedia':
   require => Exec['getAgentMedia'],
   command => 'gzip -dc $agent_media_tar_name',
-  cwd => $agent_unzip_directory,
-  Notify => "Agent Media deflated and ready for user"
+  cwd => $agent_unzip_directory
   }
 
 

@@ -6,20 +6,7 @@ class autosys_ccc_baselibs::download_agent {
   $fileserverbase_dwnld_loc = "http://${fileserverhostname}/${fileserver_agent_media_loc}/${agent_media_targz_name}"
   $agent_unzip_directory = "/opt/agent_installer/"
 
-define get_remote_file($remote_file=undef,$mode='0755')
-{
-  exec{'retrieve_${title}':
-  command => "wget -v ${fileserverhostname}/${fileserver_agent_media_loc}/${remote_file} -O ${title}",
-  path => ['/usr/bin'],
-  creates => $title,
-      }
 
-  file {${title}:
-        mode => $mode,
-        require => Exec['retrieve_${title}'],
-       }
-
-}
   file
   {
     $agent_unzip_directory:
@@ -30,11 +17,13 @@ define get_remote_file($remote_file=undef,$mode='0755')
   }
 ->
 
-exec {'getAgentZ':
+exec
+{
+  'getAgentZ':
+  command => "wget http://${fileserverhostname}/agent_media/$agent_media_targz_name",
+  path => ['/usr/bin','/usr/sbin'],
+  cwd => $agent_unzip_directory
 
-command => "/usr/bin/wget -v ${fileserverhostname}${fileserver_agent_media_loc}${agent_media_targz_name} -O /opt/agent_installer/linux_agent_114_x86.tar.Z"
-owner => 'root',
-require => File[$agent_unzip_directory],
 }
 
 

@@ -20,7 +20,7 @@ class autosys_ccc_baselibs::download_agent {
 exec
 {
   'getAgentZ':
-  command => "wget ${fileserverhostname}/agent_media/$agent_media_targz_name",
+  command => "wget -v ${fileserverhostname}/agent_media/$agent_media_targz_name",
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory
 

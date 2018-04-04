@@ -75,6 +75,7 @@ exec {
   exec {
     'setPermissions':
     command => "chmod -R 755 $agent_unzip_directory",
+    path => ['/usr/bin','/usr/sbin'],
     user => 'root',
     require => Exec['untarFile']
   }

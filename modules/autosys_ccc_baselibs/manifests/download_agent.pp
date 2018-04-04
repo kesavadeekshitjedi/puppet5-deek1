@@ -29,7 +29,7 @@ class autosys_ccc_baselibs::download_agent {
     command => 'gzip -dc ${agent_media_targz_name} | tar xvf -',
     path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => '/opt/agent_installer',
-    require => Exec['getAgentZ'],
+    require => Exec['getAgentZ']
 
   }
 

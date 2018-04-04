@@ -1,6 +1,6 @@
 class autosys_ccc_baselibs::install_agent
 {
-  $fileserverhostname="http://rh7-sq1/"
+  $fileserverhostname="http://rh7-sq1"
   $fileserver_agent_media_loc = "agent_media/"
   $agent_media_targz_name="linux_agent_114_x86.tar.Z"
   $agent_media_tar_name="linux_agent_114_x86.tar"
@@ -69,7 +69,7 @@ exec {
   require => Exec['getLocalMD5','getAgenttar']
 }
 
-
+->
 
   file {'checkAgentFile':
   path => "/opt/agent_installer/linux_x86_64",
@@ -79,7 +79,7 @@ exec {
   mode => '0755',
   require=> Exec['untarFile']
   }
-
+->
   exec {'agentInstall':
   command => "/opt/agent_installer/linux_x86_64/setup.bin -r /opt/agent_installer/unix_installer.properties",
   user => 'root',

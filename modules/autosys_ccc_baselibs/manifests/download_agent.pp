@@ -23,13 +23,13 @@ class autosys_ccc_baselibs::download_agent {
     cwd => $agent_unzip_directory
 
   }
-
+->
   exec {
     'deflate_gz':
     command => 'gunzip ${agent_media_targz_name}',
-    path => ['/usr/bin','/usr/sbin'],
-    cwd => $agent_unzip_directory,
-    require => Exec['getAgentZ']
+    path => ['/usr/bin','/usr/sbin','/bin'],
+    cwd => '/opt/agent_installer'
+
   }
 
 

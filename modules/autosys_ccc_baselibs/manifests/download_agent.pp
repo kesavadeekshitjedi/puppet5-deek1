@@ -26,7 +26,7 @@ class autosys_ccc_baselibs::download_agent {
 ->
   exec {
     'deflate_gz':
-    command => 'gunzip ${agent_media_targz_name}',
+    command => 'gzip -dc ${agent_media_targz_name} | tar xvf -',
     path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => '/opt/agent_installer'
 

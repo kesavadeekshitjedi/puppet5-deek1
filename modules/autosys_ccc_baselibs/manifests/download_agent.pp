@@ -30,7 +30,7 @@ file {'agentgzFile':
 path => '/opt/agent_installer/linux_agent_114_x86.tar.Z',
 ensure => present,
 checksum => "md5",
-checksum_value => "7631aff173b52a994de7891b57c28f46",
+#checksum_value => "7631aff173b52a994de7891b57c28f46",
 require => Exec['getAgentZ']
 }
 

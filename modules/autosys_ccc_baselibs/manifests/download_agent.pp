@@ -61,7 +61,7 @@ exec {
 }
 
 exec {
-  'untar':
+  'untarFile':
   command => 'tar -xvf linux_agent_114_x86.tar',
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,

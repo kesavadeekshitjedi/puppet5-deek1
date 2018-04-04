@@ -18,7 +18,7 @@ cwd => $agent_unzip_directory
 exec {
   'setPermissions':
   command => "chmod -R 755 $agent_unzip_directory"
-  user => 'root'
+  user => 'root',
   require => Exec['untarFile']
 }
   file

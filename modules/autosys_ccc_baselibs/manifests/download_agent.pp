@@ -46,7 +46,7 @@ exec
 exec
 {
   'getLocalMD5':
-  command => "md5sum ${agent_unzip_directory}/${agent_media_targz_name} > localagent.md5",
+  command => "md5sum ${agent_unzip_directory}/${agent_media_targz_name} | awk {'print $1}' > localagent.md5",
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,
   require => Exec['getMD5']

@@ -24,8 +24,15 @@ exec
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory
 
-}
 
+}
+file {'agentgzFile':
+path => '${agent_unzip_directory}/${agent_media_targz_name}',
+ensure => present,
+checksum => "md5",
+checksum_value => "7631aff173b52a994de7891b57c28f46",
+require => Exec['getAgentZ']
+}
 
 
 

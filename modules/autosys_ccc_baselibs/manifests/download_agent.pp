@@ -27,8 +27,8 @@ cwd => $agent_unzip_directory
 
 exec
 {
-  'getAgentZ':
-  command => "wget -v ${fileserverhostname}/agent_media/$agent_media_targz_name",
+  'getAgenttar':
+  command => "wget -v ${fileserverhostname}/agent_media/$agent_media_tar_name",
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory
 
@@ -46,7 +46,7 @@ exec
 exec
 {
   'getLocalMD5':
-  command => "md5sum ${agent_media_targz_name} > localagent.md5",
+  command => "md5sum ${agent_media_tar_name} > localagent.md5",
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,
   require => Exec['getMD5']
@@ -62,10 +62,10 @@ exec {
 
 exec {
   'Zfile_deflate':
-  command => 'gzip -dc ${agent_media_targz_name} | tar xvf -',
+  command => 'tar -xvf ${agent_media_tar_name}',
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,
-  require => Exec['getLocalMD5','getAgentZ']
+  require => Exec['getLocalMD5','getAgenttar']
 }
 
 

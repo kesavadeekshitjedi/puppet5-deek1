@@ -37,11 +37,7 @@ owner => 'root',
 require => File[$agent_unzip_directory],
 }
 
-exec{'deflate_gz':
-command => "/usr/bin/gunzip /opt/agent_installer/linux_agent_114_x86.tar.Z",
-owner => "root",
-require => Exec['getAgentZ'],
-}
+
 
 
 

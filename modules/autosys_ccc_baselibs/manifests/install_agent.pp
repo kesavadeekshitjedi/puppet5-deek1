@@ -84,6 +84,7 @@ exec {
   command => "/opt/agent_installer/linux_x86_64/setup.bin -r /opt/agent_installer/unix_installer.properties",
   user => 'root',
   returns => 0,
+  timeout => 0,
   require => Exec['untarFile','getAgenttar']
   }
 

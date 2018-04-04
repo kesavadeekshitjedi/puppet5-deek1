@@ -24,7 +24,8 @@ exec
   'getAgenttar':
   command => "wget -v ${fileserverhostname}/agent_media/$agent_media_tar_name",
   path => ['/usr/bin','/usr/sbin'],
-  cwd => $agent_unzip_directory
+  cwd => $agent_unzip_directory,
+  timeout => 0
 
 
 }

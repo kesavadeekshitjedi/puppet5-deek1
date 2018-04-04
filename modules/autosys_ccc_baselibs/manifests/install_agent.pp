@@ -82,7 +82,7 @@ exec {
   }
   ->
   exec {'agentInstall':
-  command => "/opt/agent_installer/linux_x86_64/setup.bin -r /opt/agent_installer/unix_installer.properties",
+  command => "/opt/agent_installer/linux_x86_64/setup.bin -f /opt/agent_installer/unix_installer.properties -i silent",
   user => 'root',
   returns => 0,
   timeout => 0,

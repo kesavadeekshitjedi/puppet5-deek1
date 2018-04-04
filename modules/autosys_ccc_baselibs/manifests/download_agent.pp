@@ -61,8 +61,8 @@ exec {
 }
 
 exec {
-  'Zfile_deflate':
-  command => 'tar -xvf ${agent_media_tar_name}',
+  'untar':
+  command => 'tar -xvf linux_agent_114_x86.tar',
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,
   require => Exec['getLocalMD5','getAgenttar']

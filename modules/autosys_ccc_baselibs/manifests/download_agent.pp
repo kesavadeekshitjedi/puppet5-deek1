@@ -21,24 +21,5 @@ class autosys_ccc_baselibs::download_agent {
     group => root,
     mode => '0755',
   }
-->
-  exec {'getAgentMedia':
-  command => "/usr/bin/wget $fileserverbase_dwnld_loc",
-  cwd => $agent_unzip_directory,
-
-  }
-
-  exec {'deflateMedia-gunzip':
-  require => Exec['getAgentMedia'],
-
-  command => '/usr/bin/gunzip $agent_media_targz_name',
-  cwd => $agent_unzip_directory
-  }
-  ->
-  exec {'deflateMedia-tar':
-  require => Exec['deflateMedia-gunzip'],
-  command => "/usr/bin/tar -xvf $agent_media_tar_name",
-  cwd => $agent_unzip_directory
-}
 
 }

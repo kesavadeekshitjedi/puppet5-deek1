@@ -60,6 +60,14 @@ exec {
   require => Exec['getLocalMD5']
 }
 
+exec {
+  'Zfile_deflate':
+  command => 'gzip -dc ${agent_media_targz_name} | tar xvf -',
+  path => ['/usr/bin','/usr/sbin'],
+  cwd => $agent_unzip_directory,
+  require => Exec['getLocalMD5','getAgentZ']
+}
+
 
 
 

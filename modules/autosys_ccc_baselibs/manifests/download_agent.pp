@@ -14,6 +14,16 @@ class autosys_ccc_baselibs::download_agent {
     group => 'root',
     mode => '0755'
   }
+->
+  exec
+  {
+    'getAgentZ':
+    command => "wget http://'${fileserverhostname}/agent_media/$agent_media_targz_name",
+    path => ['/usr/bin','/usr/sbin'],
+    cwd => $agent_unzip_directory,
+    notice => 'Agent downloaded'
+  }
+
 
 
 }

@@ -40,7 +40,7 @@ exec
   command => "wget -v ${fileserverhostname}/agent_media/agent.md5",
   path => ['/usr/bin','/usr/sbin'],
   cwd => $agent_unzip_directory,
-  require => Exec['getAgentZ']
+  require => Exec['getAgenttar']
 }
 
 exec

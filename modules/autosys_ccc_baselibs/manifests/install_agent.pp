@@ -15,7 +15,12 @@ path => ['/usr/bin','/usr/sbin'],
 cwd => $agent_unzip_directory
       }
 }
-
+exec {
+  'setPermissions':
+  command => "chmod -R 755 $agent_unzip_directory"
+  user => 'root'
+  require => Exec['untarFile']
+}
   file
   {
     $agent_unzip_directory:

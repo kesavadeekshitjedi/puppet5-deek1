@@ -6,6 +6,14 @@ class autosys_ccc_baselibs::download_agent {
   $fileserverbase_dwnld_loc = "http://${fileserverhostname}/${fileserver_agent_media_loc}/${agent_media_targz_name}"
   $agent_unzip_directory = "/opt/agent_installer/"
 
+define file_compare($source_file=undef, $target_file=undef)
+{
+  exec{'diff_2_files':
+command => 'diff $source_file $target_file',
+path => ['/usr/bin','/usr/sbin'],
+cwd => $agent_unzip_directory
+      }
+}
 
   file
   {
@@ -26,13 +34,24 @@ exec
 
 
 }
-file {'agentgzFile':
-path => '/opt/agent_installer/linux_agent_114_x86.tar.Z',
-ensure => present,
-checksum => "md5",
-#checksum_value => "7631aff173b52a994de7891b57c28f46",
-require => Exec['getAgentZ']
+exec
+{
+  'getMD5':
+  command => "wget -v ${fileserverhostname}/agent_media/agent.md5",
+  path => ['/usr/bin','/usr/sbin'],
+  cwd => $agent_unzip_directory,
+  require => Exec['getAgentZ']
 }
+
+exec
+{
+  'getLocalMD5':
+  command => "md5sum ${agent_unzip_directory}/${agent_media_targz_name} > localagent.md5",
+  path => ['/usr/bin','/usr/sbin'],
+  cwd => $agent_unzip_directory,
+  require => Exec['getMD5']
+}
+
 
 
 

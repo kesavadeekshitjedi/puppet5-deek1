@@ -11,7 +11,7 @@ class autosys_ccc_baselibs::install_agent
   exec {'agentInstall':
   command => "/opt/agent_installer/linux_x86_64/setup.bin -r /opt/agent_installer/unix_installer.properties",
   user => 'root',
-  return => 0
+  returns => 0
   }
 
 

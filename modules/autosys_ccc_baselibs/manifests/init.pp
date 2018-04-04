@@ -41,6 +41,7 @@ $agent_install_base_packages = ['wget','gzip','unzip','tar']
 package { $agent_install_base_packages:
 	ensure => present,
 }
-include autosys_ccc_baselibs::download_agent,autosys_ccc_baselibs::install_agent
+include autosys_ccc_baselibs::download_agent,
+				autosys_ccc_baselibs::install_agent
 
 }

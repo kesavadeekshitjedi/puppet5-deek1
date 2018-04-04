@@ -7,21 +7,8 @@ class autosys_ccc_baselibs::install_agent
   $fileserverbase_dwnld_loc = "http://${fileserverhostname}/${fileserver_agent_media_loc}/${agent_media_targz_name}"
   $agent_unzip_directory = "/opt/agent_installer/"
 
-define file_compare($source_file=undef, $target_file=undef)
-{
-  exec{'diff_2_files':
-command => 'diff $source_file $target_file',
-path => ['/usr/bin','/usr/sbin'],
-cwd => $agent_unzip_directory
-      }
-}
-->
-exec {
-  'setPermissions':
-  command => "chmod -R 755 $agent_unzip_directory",
-  user => 'root',
-  require => Exec['untarFile']
-}
+
+
   file
   {
     $agent_unzip_directory:
@@ -85,7 +72,13 @@ exec {
   mode => '0755',
   require=> Exec['untarFile']
   }
-->
+  exec {
+    'setPermissions':
+    command => "chmod -R 755 $agent_unzip_directory",
+    user => 'root',
+    require => Exec['untarFile']
+  }
+  ->
   exec {'agentInstall':
   command => "/opt/agent_installer/linux_x86_64/setup.bin -r /opt/agent_installer/unix_installer.properties",
   user => 'root',

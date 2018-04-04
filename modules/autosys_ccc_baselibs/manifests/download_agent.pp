@@ -7,18 +7,5 @@ class autosys_ccc_baselibs::download_agent {
   $agent_unzip_directory = "/opt/agent_installer/"
 
 
-  file {$download_directory:
-    ensure => directory,
-    owner => root,
-    group => root,
-    mode => '0755',
-  }
-->
-  file {$agent_unzip_directory:
-    ensure => directory,
-    owner => root,
-    group => root,
-    mode => '0755',
-  }
 
 }

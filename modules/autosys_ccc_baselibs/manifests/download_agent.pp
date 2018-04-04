@@ -27,7 +27,7 @@ class autosys_ccc_baselibs::download_agent {
   cwd => $agent_unzip_directory,
 
   }
-
+->
   exec {'deflateMedia-gunzip':
   require => Exec['getAgentMedia'],
 

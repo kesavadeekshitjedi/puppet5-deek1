@@ -14,7 +14,7 @@ class autosys_ccc_baselibs::service{
   owner => 'autosys',
   group => 'autosys',
   mode => '0644',
-  source => "puppet://${servername}/modules/${module_name}/cryptkey.txt"
+  source => "puppet://${servername}/modules/${module_name}/cryptkey.txt",
   require => [Class["autosys_ccc_baselibs::install_agent"]]
   }
 

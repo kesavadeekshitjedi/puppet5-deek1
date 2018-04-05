@@ -1,0 +1,196 @@
+#!/bin/sh
+#* ------------------------------------------------------------------------- *
+#*                                                                           *
+#*                Copyright (c) 2018 CA.  All rights reserved.               *
+#*                                                                           *
+#* This software and all information contained therein is confidential and   *
+#* proprietary and shall not be duplicated, used, disclosed or disseminated  *
+#* in any way except as authorized by the applicable license agreement,      *
+#* without the express written permission of CA. All authorized              *
+#* reproductions must be marked with this language.                          *
+#*                                                                           *
+#* EXCEPT AS SET FORTH IN THE APPLICABLE LICENSE AGREEMENT, TO THE EXTENT    *
+#* PERMITTED BY APPLICABLE LAW, CA PROVIDES THIS SOFTWARE WITHOUT WARRANTY   *
+#* OF ANY KIND, INCLUDING WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF      *
+#* MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  IN NO EVENT WILL    *
+#* CA BE LIABLE TO THE END USER OR ANY THIRD PARTY FOR ANY LOSS OR DAMAGE,   *
+#* DIRECT OR INDIRECT, FROM THE USE OF THIS SOFTWARE, INCLUDING WITHOUT      *
+#* LIMITATION, LOST PROFITS, BUSINESS INTERRUPTION, GOODWILL, OR LOST DATA,  *
+#* EVEN IF CA IS EXPRESSLY ADVISED OF SUCH LOSS OR DAMAGE.                   *
+#*                                                                           *
+#* ------------------------------------------------------------------------- *
+
+### BEGIN INIT INFO
+# CA Product Entry
+# Provides: waae_agent-WA_AGENT
+# Required-Start: $network $remote_fs
+# Required-Stop: $network $remote_fs
+# Default-Start: 3 5
+# Default-Stop: 0 1 2 6
+# chkconfig: 35 61 19
+# Description: CA Workload Automation System Agent
+### END INIT INFO
+# System Agent Installation directory.
+AGENTDIR=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT
+# System Agent name
+AGENTNAME=WA_AGENT
+prog="WAAE Agent ($AGENTNAME)"
+
+test -r /etc/profile.CA && { CA_SECTION=ccs; export CA_SECTION; . /etc/profile.CA; unset CA_SECTION; }
+
+if [ `uname` = "HP-UX" ]; then
+      if [ `uname -m` = "ia64" ]; then
+          if [ -z "$SHLIB_PATH" ]; then
+              SHLIB_PATH=/usr/lib/hpux64; export SHLIB_PATH
+          else
+              SHLIB_PATH=/usr/lib/hpux64:${SHLIB_PATH}; export SHLIB_PATH
+          fi
+      fi
+fi
+if [ -f /etc/rc.status ]; then
+      # SuSE Linux
+      . /etc/rc.status
+      rc_reset
+      agent_status1() { rc_status -v; }
+      agent_status2() { rc_status -v; }
+elif [ -f /etc/rc.d/init.d/functions ]; then
+      # Red Hat Linux
+      . /etc/rc.d/init.d/functions
+      agent_status1() {
+              set -- "$1" "$2" $?
+              test $3 -eq 0 && success || failure
+              echo
+              return $3
+      }
+      agent_status2() { agent_result "$1" "$2"; }
+else
+      # Generic
+      agent_status1() { agent_result "$1" "$2"; }
+      agent_status2() { agent_result "$1" "$2"; }
+fi
+
+# Echo without newline.
+echo_n() {
+      case `echo -n` in
+      "") echo -n "$@" ;;
+      *)  echo "$@"\\c ;;
+      esac
+}
+
+# Generic status report.
+agent_result() {
+      set -- "$1" "$2" $?
+      test $3 -eq 0 && echo "$1" || echo "$2"
+      return $3
+}
+
+# Status report like unifstat.
+agent_fstat() {
+      set -- "running" "not active" $?
+      test $3 -eq 0 || set -- "$2" "$1" $3
+      printf "%-38s %6s  %s\n" "$prog" ${pid:--} "$1"
+      return $3
+}
+
+# Favor nawk on Solaris.
+if [ -x /usr/bin/nawk ]; then
+      awk() { nawk "$@"; }
+fi
+
+# Print the agent's pid.
+agent_pid() {
+
+      # Agent status file
+      st="$AGENTDIR/status"
+      if [ -f "$st" ]; then
+              if grep Inactive "$st" >/dev/null 2>&1; then
+                    return 1
+              fi
+              set -- `sed -n 's/^OS component - \([0-9]*\)/\1/p' < "$st"`
+
+              # Return inactive if the status file is empty.
+              if [ -z "$1" ]; then 
+                    return 1
+              fi
+              if [ -n "$1" -a \( ! -d /proc -o -d /proc/1 \) ]; then
+                    # List only the candidate process unless we are in a zone.
+                    ps -fp "$1"
+              elif [ -x /usr/bin/zonename -a -d /proc/1 ]; then
+                    # Non-authoritative answer for the Solaris global zone.
+                    ps -fz0
+              else
+                    # Non-authoritative answer: this will be correct unless
+                    # there's an orphaned child belonging to root.
+                    ps -ef
+              fi | awk '
+                    BEGIN { init = 1 }
+                    $2 == $3 && /[z]sched/ { init = $2 }
+                    ($2 == run_pid || run_pid == "") && /ybAgent.bin/ {
+                            pid = $2; ppid = $3
+                    }
+                    ppid == init { print pid; exit }
+                    END { exit ppid != init }
+                    ' run_pid="$1"
+              else
+              return 1
+      fi
+}
+
+# Start the agent.
+# Report success if it's already running or comes up.
+agent_start() {
+      (cd "$AGENTDIR"; ./cybAgent -a)
+      var_exit=$?
+      test $var_exit -ne 0 && return $var_exit
+      test -d /var/lock/subsys && touch /var/lock/subsys/waae_agent-WA_AGENT
+      return $var_exit
+}
+
+# Stop the agent.
+# Report success if it's already stopped.
+agent_stop() {
+      (cd "$AGENTDIR"; ./cybAgent -s) 
+      var_exit=$?
+      test -d /var/lock/subsys && rm -f /var/lock/subsys/waae_agent-WA_AGENT
+      return $var_exit
+}
+
+case "$1" in
+start_msg)
+      echo "Start $prog"
+      ;;
+stop_msg)
+      echo "Stopping $prog"
+      ;;
+start)
+      echo_n "$prog "
+      agent_start
+      agent_status1 started. FAILED.
+      ;;
+stop)
+      echo_n "$prog "
+      agent_stop
+      agent_status2 stopped. "NOT STOPPED."
+      ;;
+restart)
+      $0 stop || exit 1
+      sleep 5
+      $0 start
+      ;;
+status)
+      pid=`agent_pid`
+      agent_fstat
+      ;;
+monitor)
+      # Same as status, with exit codes for Veritas clusters.
+      pid=`agent_pid`
+      if agent_fstat
+      then exit 110
+      else exit 100
+      fi
+      ;;
+*)
+      echo "Usage: $0 {start|stop|restart|status|monitor}"
+      exit 1
+      ;;
+esac

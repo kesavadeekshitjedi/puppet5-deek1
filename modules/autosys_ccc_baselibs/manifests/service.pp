@@ -18,7 +18,7 @@ class autosys_ccc_baselibs::service{
 
   service {'waae_agent-WA_AGENT' :
   ensure => running,
-  user => 'root',
+  enable => 'true',
   name => 'waae_agent-WA_AGENT'
   }
 }

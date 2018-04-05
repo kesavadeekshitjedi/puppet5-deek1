@@ -22,6 +22,6 @@ class autosys_ccc_baselibs::service{
   ensure => running,
   enable => 'true',
   name => 'waae_agent-WA_AGENT',
-  reqire => File['/etc/init.d/waae_agent-WA_AGENT']
+  require => File['/etc/init.d/waae_agent-WA_AGENT']
   }
 }

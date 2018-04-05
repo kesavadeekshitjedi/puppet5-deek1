@@ -15,6 +15,7 @@ class autosys_ccc_baselibs::service{
   group => 'autosys',
   mode => '0644',
   source => "puppet://${servername}/modules/${module_name}/cryptkey.txt"
+  require => [Class["autosys_ccc_baselibs::install_agent"]]
   }
 
   service {'waae_agent-WA_AGENT' :

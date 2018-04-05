@@ -132,13 +132,3 @@ installer.version=11.4.00.00
 # Added by WAAE Add Instance
 #
 oscomponent.environment.variable_manager_TM1_SCH=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/profiles/TM1.txt
-
-#
-# Added by Manager
-#
-communication.manageraddress_1=rhel7-ae-1.rmt.com
-communication.managerhealthmon_1=true
-communication.managerid_1=TM1_SCH
-communication.managerport_1=7507
-communication.protocolrev_1=3
-communication.socket_1=plain

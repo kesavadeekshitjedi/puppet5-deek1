@@ -27,7 +27,7 @@ class autosys_ccc_baselibs::install_agent
   {
     'getAgenttar':
     command => "wget -v ${fileserverhostname}/agent_media/$agent_media_tar_name",
-    path => ['/usr/bin','/usr/sbin'],
+    path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => $agent_unzip_directory,
     timeout => 0
 
@@ -37,7 +37,7 @@ class autosys_ccc_baselibs::install_agent
   {
     'getMD5':
     command => "wget -v ${fileserverhostname}/agent_media/agent.md5",
-    path => ['/usr/bin','/usr/sbin'],
+    path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => $agent_unzip_directory,
     require => Exec['getAgenttar']
   }
@@ -46,7 +46,7 @@ class autosys_ccc_baselibs::install_agent
   {
     'getLocalMD5':
     command => "md5sum ${agent_media_tar_name} > localagent.md5",
-    path => ['/usr/bin','/usr/sbin'],
+    path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => $agent_unzip_directory,
     require => Exec['getMD5']
   }
@@ -54,7 +54,7 @@ class autosys_ccc_baselibs::install_agent
   exec {
     'localMD5':
     command => 'cat localagent.md5 | awk \'{print $1}\' > local.md5',
-    path => ['/usr/bin','/usr/sbin'],
+    path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => $agent_unzip_directory,
     require => Exec['getLocalMD5']
   }
@@ -62,7 +62,7 @@ class autosys_ccc_baselibs::install_agent
   exec {
     'untarFile':
     command => 'tar -xvf linux_agent_114_x86.tar',
-    path => ['/usr/bin','/usr/sbin'],
+    path => ['/usr/bin','/usr/sbin','/bin'],
     cwd => $agent_unzip_directory,
     require => Exec['getLocalMD5','getAgenttar']
   }
@@ -80,7 +80,7 @@ class autosys_ccc_baselibs::install_agent
     exec {
       'setPermissions':
       command => "chmod -R 755 $agent_unzip_directory",
-      path => ['/usr/bin','/usr/sbin'],
+      path => ['/usr/bin','/usr/sbin','/bin'],
       user => 'root',
       require => Exec['untarFile']
     }

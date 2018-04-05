@@ -10,8 +10,8 @@ class autosys_ccc_baselibs::service{
 
   file {'/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/cryptkey.txt':
   ensure => present,
-  owner => 'root',
-  group => 'root',
+  owner => 'autosys',
+  group => 'autosys',
   mode => '0755',
   source => "puppet://${servername}/modules/${module_name}/cryptkey.txt"
   }

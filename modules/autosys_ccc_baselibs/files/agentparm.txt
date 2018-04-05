@@ -1,0 +1,228 @@
+#
+# Agent settings for linux-x86-32
+#
+
+#
+# Log
+#
+# log.archive settings:
+#  0 - archive with time extension
+#  1 - append ".archive.log"
+#  2 - delete previous log
+#  3 - keep writing to the same log file
+log.level=5
+log.archive=1
+log.maxsize=1M
+#
+
+#
+# Agent name
+#
+agentname=WA_AGENT
+
+#
+# Communications
+#
+communication.inputport=7520
+
+# Allow agent to start with no managers defined
+communication.nomanagers.abort.disable=true
+
+#
+# Security
+#
+security.filename=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/security.txt
+security.level=off
+security.cryptkey=cryptkey.txt 
+
+#
+# Initiators
+# There will be separate line for each pair of <class, number of initiators>
+# initiators.class_N, where N is number running from 1 to ...
+# Class is user definable, (should be the same here and in AFM)
+# Soft shutdown mode waits for all jobs to be completed
+# 
+initiators.class_1=Default,100
+initiators.class_2=DK,100
+
+#
+# Core parameters
+#
+core.health.monitor.enable=true
+
+#
+# General characteristics
+#
+spooldir=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/spool
+# Java parameters
+oscomponent.libjvmpath=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/jre/lib/i386/libjava.so
+
+# What plugins we want to start by the core Java agent
+plugins.start_internal_1=runner
+plugins.start_internal_2=router
+plugins.start_internal_3=filemon
+plugins.start_internal_4=objmon
+plugins.start_internal_5=filebrowser
+plugins.start_internal_6=ftp
+
+# Jars classpath
+oscomponent.classpath=jars/*.jar:jars/ext/*
+management.snmp.mibfile=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/cybermation.mib
+
+#
+# FTP specific
+#
+
+ftp.noserver=true
+#ftp.serverport=21
+
+#ftp.client.ssl=false
+#ftp.client.ssl.truststore=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/cacerts
+#ftp.client.ssl.truststore.password=055A55EB863D2A5D
+
+#ftp.server.ssl=false
+#ftp.server.ssl.keystore=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/serverkeystore
+#ftp.server.ssl.keystore.password=C8B98BFA6652520BC0
+
+
+# 
+# What management connectors we want to start by the core Java agent
+# 
+
+
+#
+# Unix specific settings
+# 
+oscomponent.loginshell=false
+oscomponent.defaultshell=/bin/sh
+oscomponent.validshell=/usr/bin/sh,/bin/csh,/bin/ksh,/bin/sh,/bin/bash
+oscomponent.checkvalidshell=true
+oscomponent.lookupcommand=true
+oscomponent.joblog=true
+
+#
+# Agent-wide environment variables
+#
+
+oscomponent.environment.variable=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/profiles/WAAE.txt
+
+#
+# Manager specific environment variables
+#
+
+oscomponent.environment.variable_manager_=
+
+#
+# Installer setting. Do not modify the setting below
+#
+installer.version=11.3.07.00
+
+#
+# Joblog and Spool File Cleanup
+#
+agent.spool.success.autocleanup=true
+oscomponent.joblog.success.autocleanup=true
+runnerplugin.spool.clean.enable=true
+runnerplugin.spool.expire=7d
+
+#
+# Job Default Properties
+#
+agent.resourcemon.enable=true
+oscomponent.auth.pam.svc=sshd
+
+#
+# Legacy Default Values
+#
+filemon.firstscan.skip=true
+oscomponent.cmdprefix.force=true
+oscomponent.initialworkingdirectory=USER_CONT_NOT_AVAIL
+oscomponent.noexitcode=256
+oscomponent.noforceprofile=true
+oscomponent.profiles.src.delay=true
+oscomponent.profiles.src.order.global.first=true
+oscomponent.profiles.src.verify=true
+
+#
+# Health Disk Resource Monitoring parameters
+#
+agent.resourcemon.threshold.disk.warning.notice=30M 
+agent.resourcemon.threshold.disk.warning.severe=20M 
+agent.resourcemon.threshold.disk.critical=10M
+
+#
+# Added by WAAE Add Instance
+#
+oscomponent.environment.variable_manager_ADK_SCH=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/profiles/ADK.txt
+
+#
+# Added by Manager
+#
+communication.manageraddress_1=LUMOS.RMT.com
+communication.managerhealthmon_1=true
+communication.managerid_1=ADK_SCH
+communication.managerport_1=7507
+communication.socket_1=plain
+
+#
+# Added by Installer for sql
+#
+
+mssql.default.TargetDB=AWAE-SQ1136-1
+plugins.start_internal_7=sql
+
+#
+# Added by Installer for proxy
+#
+
+plugins.start_internal_8=proxy
+proxy.connection.debug.enable=true
+oscomponent.environment.variable_manager_TST_SCH=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/profiles/TST.txt
+communication.manageraddress_2=LUMOS.RMT.com
+communication.managerhealthmon_2=true
+communication.managerid_2=TST_SCH
+communication.managerport_2=7508
+communication.socket_2=plain
+
+#
+# Added by Installer for sap
+#
+
+#sap.config.ignoreStartupFailures=true
+#sap.default.language=EN
+#sap.job.children.cancel=true
+#sap.job.children.delete=true
+#sap.job.children.monitor=true
+#sap.job.children.recursive=true
+#sap.job.dump_ref.enabled=true
+#sap.job.resubmission=false
+#sap.useRegularExpressions=true
+oscomponent.jvm.x.options=-Xmx512M
+
+#
+# Added by Installer for ps
+#
+
+#ps.default.oprId=oprId
+#ps.default.oprPassword=encryptedPasswd
+#ps.default.outDestFormat=PDF
+#ps.default.outDestType=WEB
+#ps.default.printer=lpt1
+#ps.default.runCntlId=runCntlId
+#ps.default.serverName=serverName
+#ps.home=<Path to PS_HOME relative to this agent. Set it if different than PS_HOME>
+#ps.jobmonitor.pollinterval_ms=10000
+#ps.noCreateRunCntl=true
+#ps.runIndependent=true
+#PS_HOME=PS_HOME
+#jdbc.drivers=oracle.jdbc.driver.OracleDriver:com.microsoft.sqlserver.jdbc.SQLServerDriver:com.ibm.db2.jcc.DB2Driver:sun.jdbc.odbc.JdbcOdbcDriver
+#plugins.start_internal_9=ps
+#ps.db.accessId=dbuser
+#ps.db.accessPassword=9ABDB1FA3EF83A8D
+#ps.db.typeName=ORACLE
+#ps.db.typeNr=2
+#ps.db.url=jdbc:oracle:thin:@databaseHost:1521:ORACLE_SID
+#ps.reportRepositoryPath=ReportPath
+#ps.skipOprPswdValidation=true
+#ps.unquoteBindVar.Informatica=true
+#ps.version=8.54

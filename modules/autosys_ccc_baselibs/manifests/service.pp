@@ -24,4 +24,15 @@ class autosys_ccc_baselibs::service{
   name => 'waae_agent-WA_AGENT',
   require => File['/etc/init.d/waae_agent-WA_AGENT']
   }
+
+  file {'/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/agentparm.txt':
+  ensure => present,
+  source => "puppet://${servername}/modules/${module_name}/agentparm.txt",
+  owner => 'autosys',
+  group => 'autosys',
+  mode => '0664',
+  require => [Class["autosys_ccc_baselibs::install_agent"]],
+  notify => Service['waae_agent-WA_AGENT']
+
+  }
 }

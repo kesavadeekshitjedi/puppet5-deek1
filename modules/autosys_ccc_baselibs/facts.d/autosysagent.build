@@ -1,0 +1,10 @@
+#!/bin/sh
+
+agentBuildNumber=1609
+agentVersionNumber=11.4
+agentServicePackNumber=00
+agentMaintenanceLevel=0
+echo "ae_agent_install_version=${agentVersionNumber}"
+echo "ae_agent_build_number=${agentBuildNumber}"
+echo "ae_agent_service_pack=${agentServicePackNumber}"
+echo "ae_agent_maintenance_level=${agentMaintenanceLevel}"

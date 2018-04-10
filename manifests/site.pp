@@ -8,7 +8,7 @@
 
 if $::operatingsystemmajrelease == '7.3'
 {
-  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :},
+  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :}
   include redhatpackages::rhel7
   package {'lsof' :
   ensure => 'present',
@@ -16,7 +16,7 @@ if $::operatingsystemmajrelease == '7.3'
 }
 else if $::operatingsystemmajrelease='6.6'
 {
-  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :},
+  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :}
   include redhatpackages::rhel6
   package {'lsof' :
   ensure => 'present',

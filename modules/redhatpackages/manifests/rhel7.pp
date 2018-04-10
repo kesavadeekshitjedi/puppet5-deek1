@@ -1,4 +1,4 @@
-class linuxpackages::rhel7
+class redhatpackages::rhel7
 {
   service {'firewalld':
   ensure => stopped,

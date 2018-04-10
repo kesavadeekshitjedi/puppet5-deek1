@@ -1,9 +1,25 @@
-node 'rhel7-pp-agt2.rmt.com','rhel6-pp-agt1.rmt.com' {
+#node 'rhel7-pp-agt2.rmt.com','rhel6-pp-agt1.rmt.com' {
   #include autosys_ccc_baselibs # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
-  include redhatpackages
-  package {'lsof':
-  ensure => present,
+#  include redhatpackages
+#  package {'lsof':
+#  ensure => present,
+#  }
+#}
+
+if $::operatingsystemmajrelease == '7.3'
+{
+  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :},
+  include redhatpackages::rhel7
+  package {'lsof' :
+  ensure => 'present',
   }
+}
+else if $::operatingsystemmajrelease='6.6'
+{
+  Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :},
+  include redhatpackages::rhel6
+  package {'lsof' :
+  ensure => 'present',
 }
 node 'rhel7-wcc-1.rmt.com','rhel7-wcc-2.rmt.com' {
 

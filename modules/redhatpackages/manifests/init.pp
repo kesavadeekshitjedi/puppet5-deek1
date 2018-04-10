@@ -42,7 +42,7 @@
 #
 # Copyright 2018 Your name here, unless otherwise noted.
 #
-class linuxpackages {
+class redhatpackages {
 
   case $::operatingsystemmajrelease {
     '7.1' : {include linuxpackages::rhel7}

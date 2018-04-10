@@ -35,7 +35,7 @@ user {'wcc':
 
 node default {
         include x11packages
-        include autosys_ccc_baselibs
+        #include autosys_ccc_baselibs
         include oracle12201
 user {'daddepalli':
         ensure => present,

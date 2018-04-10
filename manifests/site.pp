@@ -6,7 +6,7 @@
 #  }
 #}
 
-if $::operatingsystemmajrelease == '7.3'
+if $::operatingsystemrelease == '7.3'
 {
   Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :}
   include redhatpackages::rhel7
@@ -14,7 +14,7 @@ if $::operatingsystemmajrelease == '7.3'
   ensure => 'present',
   }
 }
-elsif $::operatingsystemmajrelease == '6.0'
+elsif $::operatingsystemrelease == '6.0'
 {
   Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :}
   include redhatpackages::rhel6

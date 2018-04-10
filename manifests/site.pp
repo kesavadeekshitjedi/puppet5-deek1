@@ -14,12 +14,13 @@ if $::operatingsystemmajrelease == '7.3'
   ensure => 'present',
   }
 }
-else if $::operatingsystemmajrelease='6.6'
+elsif $::operatingsystemmajrelease == '6.6'
 {
   Notify {'Operating System is $operatingsystem version $operatingsystemmajrelease' :}
   include redhatpackages::rhel6
   package {'lsof' :
   ensure => 'present',
+}
 }
 node 'rhel7-wcc-1.rmt.com','rhel7-wcc-2.rmt.com' {
 

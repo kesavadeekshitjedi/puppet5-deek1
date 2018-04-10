@@ -45,11 +45,11 @@
 class redhatpackages {
 
   case $::operatingsystemmajrelease {
-    '7.1' : {include linuxpackages::rhel7}
-    '7.2' : {include linuxpackages::rhel7}
-    '6.6' : {include linuxpackages::rhel6}
+    '7.1' : {include redhatpackages::rhel7}
+    '7.2' : {include redhatpackages::rhel7}
+    '6.6' : {include redhatpackages::rhel6}
 
-    default : {include linuxpackages::rhel7}
+    default : {include redhatpackages::rhel7}
   }
 
 

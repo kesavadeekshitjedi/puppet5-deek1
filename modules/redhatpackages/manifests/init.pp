@@ -48,6 +48,7 @@ class redhatpackages {
     '7.1' : {include redhatpackages::rhel7}
     '7.2' : {include redhatpackages::rhel7}
     '6.6' : {include redhatpackages::rhel6}
+    '6.0' : {include redhatpackages::rhel6}
 
     default : {include redhatpackages::rhel7}
   }

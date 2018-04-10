@@ -127,8 +127,3 @@ oscomponent.environment.variable=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGE
 # Installer setting. Do not modify the setting below
 #
 installer.version=11.4.00.00
-
-#
-# Added by WAAE Add Instance
-#
-oscomponent.environment.variable_manager_TM1_SCH=/opt/CA/WorkloadAutomationAE/SystemAgent/WA_AGENT/profiles/TM1.txt

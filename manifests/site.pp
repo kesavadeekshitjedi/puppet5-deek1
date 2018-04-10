@@ -1,5 +1,6 @@
 node 'rhel7-pp-agt2.rmt.com','rhel6-pp-agt1.rmt.com' {
-  include autosys_ccc_baselibs # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
+  #include autosys_ccc_baselibs # attempt to download the autosys agent using wget. Also creates a bunch of folders and unzips the file.
+  include redhatpackages
   package {'lsof':
   ensure => present,
   }

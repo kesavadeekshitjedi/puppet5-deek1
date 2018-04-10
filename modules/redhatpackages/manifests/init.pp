@@ -42,7 +42,15 @@
 #
 # Copyright 2018 Your name here, unless otherwise noted.
 #
-class dev {
+class linuxpackages {
+
+  case $::operatingsystemmajrelease {
+    '7.1' : {include linuxpackages::rhel7}
+    '7.2' : {include linuxpackages::rhel7}
+    '6.6' : {include linuxpackages::rhel6}
+
+    default : {include linuxpackages::rhel7}
+  }
 
 
 }
